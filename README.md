@@ -64,20 +64,22 @@ Note the latest release, v4.0, at: https://github.com/rhowardstone/Epstein-resea
 
 **URL Pattern:** `https://www.justice.gov/epstein/files/DataSet%20{N}/EFTA{XXXXXXXX}.pdf`
 
-| Dataset | EFTA Start | EFTA End | Note |
-|---------|-----------|----------|------|
-| 1 | 00000001 | 00003158 | |
-| 2 | 00003159 | 00003857 | |
-| 3 | 00003858 | 00005586 | |
-| 4 | 00005705 | 00008320 | Gap: 5587-5704 (files exist in adjacent datasets) |
-| 5 | 00008409 | 00008528 | Gap: 8321-8408 (files exist in adjacent datasets) |
-| 6 | 00008529 | 00008998 | |
-| 7 | 00009016 | 00009664 | Gap: 8999-9015 (files exist in adjacent datasets) |
-| 8 | 00009676 | 00039023 | Largest single dataset |
-| 9 | 00039025 | 01262781 | Labeled "REMOVED" but returns 200 |
-| 10 | 01262782 | 02205654 | |
-| 11 | 02205655 | 02730264 | |
-| 12 | 02730265 | 02731783 | |
+| Dataset | EFTA Start | EFTA End |
+|---------|-----------|----------|
+| 1 | 00000001 | 00003158 |
+| 2 | 00003159 | 00003857 |
+| 3 | 00003858 | 00005586 |
+| 4 | 00005705 | 00008320 |
+| 5 | 00008409 | 00008528 |
+| 6 | 00008529 | 00008998 |
+| 7 | 00009016 | 00009664 |
+| 8 | 00009676 | 00039023 |
+| 9 | 00039025 | 01262781 |
+| 10 | 01262782 | 02205654 |
+| 11 | 02205655 | 02730264 |
+| 12 | 02730265 | 02731783 |
+
+**Note:** EFTA numbers are assigned **per page**, not per document. A multi-page document consumes consecutive EFTA numbers — e.g., EFTA00008320 (89 pages) covers Bates numbers 00008320–00008408, and Dataset 5 begins at EFTA00008409. There are **no gaps** between datasets; every apparent gap is accounted for by multi-page documents at dataset boundaries.
 
 ## Full Database Downloads
 
@@ -167,7 +169,7 @@ For developers building tools on top of this data:
 - Entity `efta_numbers` arrays give you cross-references: "this person appears in these documents."
 - Knowledge graph `weight` on relationships indicates strength of connection (higher = more documented).
 - Image `image_name` format is `EFTA{number}_p{page}_i{index}_{hash}.png` — parse EFTA number and page from the filename.
-- **Gap EFTAs:** The gaps between datasets (e.g., 5587-5704) are not missing — those files exist and resolve via DOJ URLs in adjacent datasets. When resolving an EFTA in a gap range, try the dataset on either side.
+- **No inter-dataset gaps:** EFTA numbers are per-page, so a multi-page terminal document in each dataset consumes the EFTA numbers up to the next dataset's start. There are no missing files between datasets.
 
 ## License
 
