@@ -4,9 +4,7 @@ Structured data exports from the forensic analysis of the 218GB DOJ Jeffrey Epst
 
 I have threaded through these databases into a searchable visual interface, with an AI-assistant, at https://epstein-data.com
 
-Note the latest release, v3.0, at: https://github.com/rhowardstone/Epstein-research-data/releases/tag/v3.0
-
-For info on the full dataset integrated on the website, please see: https://github.com/stonesalltheway1/Epstein-Pipeline
+Note the latest release, v4.0, at: https://github.com/rhowardstone/Epstein-research-data/releases/tag/v4.0
 
 **Results repo:** [Epstein-research](https://github.com/rhowardstone/Epstein-research) — 100+ forensic investigation reports with DOJ source citations.
 
