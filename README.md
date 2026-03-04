@@ -8,6 +8,27 @@ Note the latest release, v4.0, at: https://github.com/rhowardstone/Epstein-resea
 
 **Results repo:** [Epstein-research](https://github.com/rhowardstone/Epstein-research) — 100+ forensic investigation reports with DOJ source citations.
 
+## Table of Contents
+
+- [What's Here](#whats-here)
+  - [Knowledge Graph](#knowledge-graph-curated)
+  - [Person Registry](#person-registry)
+  - [Entity Extraction](#entity-extraction-filtered-from-107k-raw)
+  - [Image Catalog](#image-catalog)
+  - [Document Summaries](#document-summaries)
+  - [Reconstructed Pages](#reconstructed-pages-high-interest)
+  - [EFTA-to-DOJ URL Mapping](#efta-to-doj-url-mapping)
+- [DOJ Document Removal Audit](#doj-document-removal-audit)
+- [Alteration Analysis](#alteration-analysis)
+- [Recovered Corrupted PDFs](#recovered-corrupted-pdfs)
+- [Investigation Reports & Reference Files](#investigation-reports--reference-files)
+- [Additional Data Files](#additional-data-files)
+- [Full Database Downloads](#full-database-downloads)
+- [Processing Tools (Replication Pipeline)](#processing-tools-replication-pipeline)
+- [Integration Notes](#integration-notes)
+- [License](#license)
+- [Contact](#contact)
+
 ## What's Here
 
 ### Knowledge Graph (Curated)
@@ -81,9 +102,55 @@ Note the latest release, v4.0, at: https://github.com/rhowardstone/Epstein-resea
 
 **Note:** EFTA numbers are assigned **per page**, not per document. A multi-page document consumes consecutive EFTA numbers — e.g., EFTA00008320 (89 pages) covers Bates numbers 00008320–00008408, and Dataset 5 begins at EFTA00008409. There are **no gaps** between datasets; every apparent gap is accounted for by multi-page documents at dataset boundaries.
 
+## DOJ Document Removal Audit
+
+The [`doj_audit/`](doj_audit/) directory documents an audit of the DOJ Epstein Library that identified documents removed or altered after the initial public release.
+
+| File | Records | Description |
+|------|---------|-------------|
+| `doj_audit/CONFIRMED_REMOVED.csv` | 67,784 | Documents confirmed removed from the DOJ website (returning HTTP 404). Fields: efta, justice_gov_url, dataset, pages, scan_content_length, scan_last_modified. |
+| `doj_audit/FLAGGED_documents.csv` | 96,112 | All flagged documents with DOJ URLs and dataset info. |
+| `doj_audit/FLAGGED_documents_details.csv` | 96,112 | Flagged documents with detailed metadata including status, category, document type, priority score, confidence, and text preview. |
+| `doj_audit/SIZE_MISMATCHES.csv` | 23,989 | Documents where the file size on the DOJ server differs from the originally ingested version, suggesting post-release modification. |
+| `doj_audit/sample_verification_results.csv` | 500 | Statistical sample verification of flagged 404s using browser-based checks. |
+| `doj_audit/sample_verify.py` | — | Playwright-based verification script that passes the DOJ age gate and bot check to validate document removal status. |
+
+## Alteration Analysis
+
+The [`alteration_analysis/`](alteration_analysis/) directory contains analysis of documents where content was altered between versions of the DOJ release.
+
+| File | Records | Description |
+|------|---------|-------------|
+| `alteration_analysis/classified_alterations.csv` | 21,803 | Documents with classified alteration types (CONTENT_REDUCTION, EMAILS_REMOVED, etc.) with sensitivity ratings and LLM-generated reasoning. |
+| `alteration_analysis/removed_entities_export.csv` | 146,209 | Entities (names, accounts, phone numbers) that were removed from documents between versions, with corpus hit counts and classification. |
+
+## Recovered Corrupted PDFs
+
+The [`recovered_corrupted_pdfs/`](recovered_corrupted_pdfs/) directory contains text recovered from 5 corrupted PDF documents in the DOJ release through forensic carving:
+
+- `EFTA00593870`, `EFTA00597207`, `EFTA00645624`, `EFTA01175426`, `EFTA01220934`
+
+Each subdirectory contains the cleaned extracted text from the corresponding corrupted PDF.
+
+## Investigation Reports & Reference Files
+
+| File | Description |
+|------|-------------|
+| [`FRENCH_CONNECTION_INVESTIGATION.md`](FRENCH_CONNECTION_INVESTIGATION.md) | Detailed investigation report on Jeffrey Epstein's operations in France, covering the modeling pipeline, 22 Avenue Foch, Jack Lang, and financial infrastructure — with EFTA source citations throughout. |
+| [`COUNTING_METHODOLOGY_ANALYSIS.txt`](COUNTING_METHODOLOGY_ANALYSIS.txt) | Comprehensive counting and gap analysis of the full corpus, explaining EFTA per-page numbering, dataset coverage, inter-dataset gaps, and the 730K-page gap to the DOJ's "3.5 million pages" claim. |
+| [`MISSING_EFTA_INVESTIGATION.txt`](MISSING_EFTA_INVESTIGATION.txt) | Investigation and verification of EFTA numbering completeness, correcting earlier analysis that mistakenly reported 49% of documents withheld. |
+| [`QUICK_REFERENCE_COUNTS.txt`](QUICK_REFERENCE_COUNTS.txt) | Quick-reference summary of corpus statistics: document counts, page counts, EFTA coverage, database sizes, and key takeaways. |
+
+## Additional Data Files
+
+| File | Records | Description |
+|------|---------|-------------|
+| `la-rana-chicana-list_2-11-26_10am.csv` | 265 | Named individuals list from the La Rana Chicana source with last name, first name, description, and involvement details. Used as one of 6 sources for the person registry. |
+| `NON_EFTA_VERIFICATION_URLS.csv` | — | Verification URLs for non-EFTA documents (FBI Vault, House Oversight) with document IDs, datasets, page counts, and archive.org links. |
+
 ## Full Database Downloads
 
-All source databases are available in the [v3.0 release](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v3.0):
+The latest release is [v4.0](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v4.0). Source databases are available in the [v3.0 release](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v3.0):
 
 | Database | Compressed | Uncompressed | Contents |
 |----------|-----------|-------------|----------|
@@ -127,16 +194,25 @@ The [`tools/`](tools/) directory contains all Python scripts used to build the d
 | `tools/build_person_registry.py` | Builds unified person registry from 6 sources |
 | `tools/build_knowledge_graph.py` | Constructs entity relationship graph |
 | `tools/build_native_files_catalog.py` | Generates NATIVE_FILES_CATALOG.csv |
+| `tools/bulk_ocr.py` | Bulk OCR of all extracted images into searchable SQLite database |
+| `tools/bulk_ocr_fast.py` | Bulk OCR with maximum parallelism |
+| `tools/document_classifier.py` | Classifies documents by type based on OCR content |
+| `tools/populate_evidence_db.py` | Populates the evidence database from processed outputs |
 
 ### Search & Analysis
 
 | Tool | Description |
 |------|-------------|
 | `tools/person_search.py` | FTS5 cross-reference search with co-occurrence analysis and CSV export |
+| `tools/name_search.py` | Searches for known names/entities across all OCR'd documents |
 | `tools/congressional_scorer.py` | Scores documents by redacted-name density for congressional reading room prioritization |
 | `tools/generate_gov_reports.py` | Searches corpus for current government officials |
 | `tools/search_judicial.py` | Searches corpus for federal judges |
+| `tools/search_all_judges.py` | Searches full_text_corpus.db for all Article III federal judges from FJC database |
+| `tools/search_gov_officials.py` | Searches full_text_corpus.db for government officials from CSV and executive branch lists |
 | `tools/extract_subpoena_riders.py` | Extracts and catalogs subpoena rider documents |
+| `tools/knowledge_graph.py` | Builds and queries the knowledge graph from extracted entities |
+| `tools/update_kg_with_ds10.py` | Updates the knowledge graph with Dataset 10 analysis results |
 
 ### Data Integrity
 
@@ -144,7 +220,37 @@ The [`tools/`](tools/) directory contains all Python scripts used to build the d
 |------|-------------|
 | `tools/find_missing_efta.py` | Gap detection across EFTA numbering |
 | `tools/recover_missing_efta.py` | Recovers missing EFTAs from DOJ server or forensic carving |
+| `tools/redaction_detector.py` | Original redaction detector for black rectangles in images |
+| `tools/redaction_detector_ds10.py` | Redaction detector specialized for Dataset 10 deep analysis |
+| `tools/redaction_detector_incremental.py` | Incremental redaction detector for processing new documents |
 | `tools/run_post_ingestion_pipeline.sh` | Chains all post-ingestion steps (transcription, registry, catalog) |
+| `tools/run_dependent_analysis.sh` | Waits for OCR to process enough documents, then runs dependent analysis |
+| `tools/check_status.sh` | Reports OCR and redaction processing status |
+
+### PQG Pipeline (Prosecutorial Query Generation)
+
+A 6-step pipeline for concordance analysis, subpoena rider decomposition, and fulfillment scoring:
+
+| Tool | Description |
+|------|-------------|
+| `tools/pqg_00_extract_concordance.py` | Parses all concordance files (DAT + OPT) across all datasets into a unified database |
+| `tools/pqg_01_decompose_riders.py` | Decomposes subpoena rider documents into individual requests |
+| `tools/pqg_02_match_returns.py` | Matches document returns to subpoena requests |
+| `tools/pqg_03_score_fulfillment.py` | Scores subpoena fulfillment completeness |
+| `tools/pqg_04_build_graph.py` | Builds relationship graph from matched subpoena data |
+| `tools/pqg_05_report.py` | Generates final PQG analysis reports |
+
+### Multi-Agent Analysis Pipeline
+
+The [`tools/pipeline/`](tools/pipeline/) directory contains a multi-agent document analysis system:
+
+| Tool | Description |
+|------|-------------|
+| `tools/pipeline/agent_coordinator.py` | Coordinates parallel sub-agents for deep document reading, person identification, pattern detection, and cross-referencing |
+| `tools/pipeline/batch_processor.py` | Batch processing of documents through the analysis pipeline |
+| `tools/pipeline/entity_registry.py` | Entity registry for tracking persons and relationships across documents |
+| `tools/pipeline/extraction_only.py` | Extraction-only mode for entity and relationship extraction |
+| `tools/pipeline/victim_classifier.py` | Classifies identified persons as victims, perpetrators, or associates based on document context |
 
 ### Data Acquisition
 
