@@ -1,4 +1,4 @@
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mKK9VPito-E" frameborder="0" allowfullscreen></iframe>
+[![Watch the video](https://img.youtube.com/vi/mKK9VPito-E/0.jpg)](https://youtu.be/mKK9VPito-E)
 
 # Epstein Files: Structured Data Exports
 
