@@ -150,24 +150,24 @@ Each subdirectory contains the cleaned extracted text from the corresponding cor
 
 ## Full Database Downloads
 
-The latest release is [v4.0](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v4.0). Source databases are available in the [v3.0 release](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v3.0):
+Source databases are available in the [v4.0 release](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v4.0):
 
 | Database | Compressed | Uncompressed | Contents |
 |----------|-----------|-------------|----------|
-| [full_text_corpus.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v3.0) | 2.3GB (split) | 6.3GB | 1,385,879 documents, 2,770,154 pages with full text, FTS5 search index. All 12 EFTA datasets + House Oversight Estate (DS99) + FBI Vault (DS98) + native spreadsheets + recovered EFTAs. Download both `.part_aa` and `.part_ab` and concatenate: `cat full_text_corpus.db.gz.part_* > full_text_corpus.db.gz` |
-| [redaction_analysis_v2.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/redaction_analysis_v2.db.gz) | 166MB | 971MB | 2.59M redaction records, 849K document summaries, 39K reconstructed pages, 107K extracted entities |
-| [redaction_analysis_ds10.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/redaction_analysis_ds10.db.gz) | 87MB | 532MB | Dataset 10 deep analysis (EFTA01262782-02205654) |
-| [image_analysis.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/image_analysis.db.gz) | 64MB | 389MB | 38,955 images with AI-generated descriptions |
-| [ocr_database.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/ocr_database.db.gz) | 25MB | 68MB | OCR extraction data |
-| [transcripts.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/transcripts.db.gz) | 1.7MB | 4.8MB | 1,628 media file entries, 435 with speech content, 189,982 words (faster-whisper large-v3) |
-| [knowledge_graph.db](https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/knowledge_graph.db) | 764KB | 764KB | 524 curated entities, 2,096 relationships (uncompressed SQLite) |
+| [full_text_corpus.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v4.0) | 2.3GB (split) | 6.3GB | 1,385,879 documents, 2,770,154 pages with full text, FTS5 search index. All 12 EFTA datasets + House Oversight Estate (DS99) + FBI Vault (DS98) + native spreadsheets + recovered EFTAs. Download both `.part_aa` and `.part_ab` and concatenate: `cat full_text_corpus.db.gz.part_* > full_text_corpus.db.gz` |
+| [redaction_analysis_v2.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/redaction_analysis_v2.db.gz) | 166MB | 971MB | 2.59M redaction records, 849K document summaries, 39K reconstructed pages, 107K extracted entities |
+| [redaction_analysis_ds10.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/redaction_analysis_ds10.db.gz) | 87MB | 532MB | Dataset 10 deep analysis (EFTA01262782-02205654) |
+| [image_analysis.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/image_analysis.db.gz) | 64MB | 389MB | 38,955 images with AI-generated descriptions |
+| [ocr_database.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/ocr_database.db.gz) | 25MB | 68MB | OCR extraction data |
+| [transcripts.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/transcripts.db.gz) | 1.7MB | 4.8MB | 1,628 media file entries, 435 with speech content, 189,982 words (faster-whisper large-v3) |
+| [knowledge_graph.db](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/knowledge_graph.db) | 764KB | 764KB | 524 curated entities, 2,096 relationships (uncompressed SQLite) |
 
 **Total:** ~2.6GB compressed / ~8.9GB uncompressed
 
 ```bash
 # Download and decompress the full text corpus (split into 2 parts)
-wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/full_text_corpus.db.gz.part_aa
-wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v3.0/full_text_corpus.db.gz.part_ab
+wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/full_text_corpus.db.gz.part_aa
+wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/full_text_corpus.db.gz.part_ab
 cat full_text_corpus.db.gz.part_* > full_text_corpus.db.gz
 gunzip full_text_corpus.db.gz
 
