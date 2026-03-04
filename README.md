@@ -1,3 +1,5 @@
+[![Watch the video](https://img.youtube.com/vi/mKK9VPito-E/0.jpg)](https://youtu.be/mKK9VPito-E)
+
 # Epstein Files: Structured Data Exports
 
 Structured data exports from the forensic analysis of the 218GB DOJ Jeffrey Epstein file release (all 12 datasets + House Oversight Estate + FBI Vault: 1,385,879 documents, 2,770,154 pages).
