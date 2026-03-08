@@ -4,7 +4,18 @@
 # This chains: media transcription → spreadsheet ingestion → person registry → native catalog → DB export
 
 set -e
-BASE_DIR="/atb-data/rye/dump/epstein_files"
+
+# Auto-detect data directory
+if [ -n "$EPSTEIN_DATA_DIR" ]; then
+    BASE_DIR="$EPSTEIN_DATA_DIR"
+elif [ -f "$(dirname "$(dirname "$(readlink -f "$0")")")/full_text_corpus.db" ]; then
+    BASE_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")"
+elif [ -f "./full_text_corpus.db" ]; then
+    BASE_DIR="$(pwd)"
+else
+    echo "Error: Cannot find full_text_corpus.db. Set EPSTEIN_DATA_DIR or run from the data directory."
+    exit 1
+fi
 MEDIA_LIST="$BASE_DIR/house_estate_media_list.txt"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 

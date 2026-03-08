@@ -8,9 +8,26 @@ from PIL import Image
 import numpy as np
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
-IMAGES_DIR = "/atb-data/rye/dump/epstein_files/extracted_images"
-OUTPUT_PATH = "/atb-data/rye/dump/epstein_files/redacted_documents.jsonl"
-DB_PATH = "/atb-data/rye/dump/epstein_files/redaction_analysis.db"
+def _find_data_dir():
+    """Find the directory containing the database files."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        return os.environ["EPSTEIN_DATA_DIR"]
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo_root, "extracted_images")):
+        return repo_root
+    if os.path.exists(os.path.join(os.getcwd(), "extracted_images")):
+        return os.getcwd()
+    parent = os.path.dirname(os.getcwd())
+    for name in os.listdir(parent):
+        candidate = os.path.join(parent, name, "extracted_images")
+        if os.path.exists(candidate):
+            return os.path.join(parent, name)
+    return os.getcwd()
+
+_DATA_DIR = _find_data_dir()
+IMAGES_DIR = os.path.join(_DATA_DIR, "extracted_images")
+OUTPUT_PATH = os.path.join(_DATA_DIR, "redacted_documents.jsonl")
+DB_PATH = os.path.join(_DATA_DIR, "redaction_analysis.db")
 
 def detect_redactions(img_path):
     """Detect black rectangular regions that could be redactions"""

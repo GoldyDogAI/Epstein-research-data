@@ -25,7 +25,23 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-BASE_DIR = Path("/atb-data/rye/dump/epstein_files")
+def _find_data_dir():
+    """Find the directory containing the database files."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        return os.environ["EPSTEIN_DATA_DIR"]
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo_root, "full_text_corpus.db")):
+        return repo_root
+    if os.path.exists(os.path.join(os.getcwd(), "full_text_corpus.db")):
+        return os.getcwd()
+    parent = os.path.dirname(os.getcwd())
+    for name in os.listdir(parent):
+        candidate = os.path.join(parent, name, "full_text_corpus.db")
+        if os.path.exists(candidate):
+            return os.path.join(parent, name)
+    return os.getcwd()
+
+BASE_DIR = Path(_find_data_dir())
 CORPUS_DB = BASE_DIR / "full_text_corpus.db"
 REDACTION_DB = BASE_DIR / "redaction_analysis_v2.db"
 ENRICHMENT_FILE = BASE_DIR / "efta_enrichment.json"

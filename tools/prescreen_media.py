@@ -32,7 +32,23 @@ import time
 from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
-BASE_DIR = "/atb-data/rye/dump/epstein_files"
+def _find_data_dir():
+    """Find the directory containing the database files."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        return os.environ["EPSTEIN_DATA_DIR"]
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo_root, "transcripts.db")):
+        return repo_root
+    if os.path.exists(os.path.join(os.getcwd(), "transcripts.db")):
+        return os.getcwd()
+    parent = os.path.dirname(os.getcwd())
+    for name in os.listdir(parent):
+        candidate = os.path.join(parent, name, "transcripts.db")
+        if os.path.exists(candidate):
+            return os.path.join(parent, name)
+    return os.getcwd()
+
+BASE_DIR = _find_data_dir()
 TRANSCRIPTS_DB = os.path.join(BASE_DIR, "transcripts.db")
 MEDIA_EXTS = {'.mp4', '.avi', '.m4a', '.wav', '.mov', '.mp3', '.m4v', '.wmv',
               '.vob', '.opus', '.ts', '.amr', '.3gp'}

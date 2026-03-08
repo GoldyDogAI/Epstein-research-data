@@ -41,8 +41,25 @@ except ImportError:
     HAS_OCR = False
     print("WARNING: pytesseract/Pillow not available, OCR disabled")
 
-DB_PATH = Path("/atb-data/rye/dump/epstein_files/full_text_corpus.db")
-BASE = Path("/atb-data/rye/dump/epstein_files/house_estate_extracted")
+def _find_data_dir():
+    """Find the directory containing the database files."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        return os.environ["EPSTEIN_DATA_DIR"]
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo_root, "full_text_corpus.db")):
+        return repo_root
+    if os.path.exists(os.path.join(os.getcwd(), "full_text_corpus.db")):
+        return os.getcwd()
+    parent = os.path.dirname(os.getcwd())
+    for name in os.listdir(parent):
+        candidate = os.path.join(parent, name, "full_text_corpus.db")
+        if os.path.exists(candidate):
+            return os.path.join(parent, name)
+    return os.getcwd()
+
+_DATA_DIR = Path(_find_data_dir())
+DB_PATH = _DATA_DIR / "full_text_corpus.db"
+BASE = _DATA_DIR / "house_estate_extracted"
 DATASET_NUM = 99  # House Estate = dataset 99
 
 # Batch sizes

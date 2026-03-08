@@ -10,13 +10,34 @@ Input: full_text_corpus.db
 Output: prosecutorial_query_graph.db tables: subpoenas, rider_clauses
 """
 
+import os
 import sqlite3
 import re
 import json
 from collections import Counter
 from datetime import datetime
 
-BASE_DIR = "/atb-data/rye/dump"
+def _find_base_dir():
+    """Find the parent directory containing epstein_files/."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        candidate = os.environ["EPSTEIN_DATA_DIR"]
+        if os.path.basename(candidate) == "epstein_files":
+            return os.path.dirname(candidate)
+        if os.path.exists(os.path.join(candidate, "epstein_files")):
+            return candidate
+        return candidate
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    parent = os.path.dirname(repo_root)
+    if os.path.exists(os.path.join(parent, "epstein_files", "full_text_corpus.db")):
+        return parent
+    cwd_parent = os.path.dirname(os.getcwd())
+    if os.path.exists(os.path.join(cwd_parent, "epstein_files", "full_text_corpus.db")):
+        return cwd_parent
+    if os.path.exists(os.path.join(os.getcwd(), "epstein_files", "full_text_corpus.db")):
+        return os.getcwd()
+    return os.getcwd()
+
+BASE_DIR = _find_base_dir()
 CORPUS_DB = f"{BASE_DIR}/epstein_files/full_text_corpus.db"
 PQG_DB = f"{BASE_DIR}/epstein_files/prosecutorial_query_graph.db"
 

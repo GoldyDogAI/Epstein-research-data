@@ -5,9 +5,28 @@ import json
 import re
 from pathlib import Path
 
-DB_PATH = "/atb-data/rye/dump/epstein_files/ocr_database.db"
-FINDINGS_PATH = "/atb-data/rye/dump/epstein_files/evidence_findings.jsonl"
-OUTPUT_PATH = "/atb-data/rye/dump/epstein_files/name_crossref.jsonl"
+import os
+
+def _find_data_dir():
+    """Find the directory containing the database files."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        return os.environ["EPSTEIN_DATA_DIR"]
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo_root, "ocr_database.db")):
+        return repo_root
+    if os.path.exists(os.path.join(os.getcwd(), "ocr_database.db")):
+        return os.getcwd()
+    parent = os.path.dirname(os.getcwd())
+    for name in os.listdir(parent):
+        candidate = os.path.join(parent, name, "ocr_database.db")
+        if os.path.exists(candidate):
+            return os.path.join(parent, name)
+    return os.getcwd()
+
+_DATA_DIR = _find_data_dir()
+DB_PATH = os.path.join(_DATA_DIR, "ocr_database.db")
+FINDINGS_PATH = os.path.join(_DATA_DIR, "evidence_findings.jsonl")
+OUTPUT_PATH = os.path.join(_DATA_DIR, "name_crossref.jsonl")
 
 def extract_names_from_findings():
     """Extract all names from our evidence findings"""
