@@ -340,3 +340,15 @@ Do NOT guess the dataset from the EFTA number — the boundaries have gaps and i
 ## Companion Repository
 
 Investigation reports analyzing these documents: [rhowardstone/epstein-research](https://github.com/rhowardstone/epstein-research) — 165+ forensic analysis reports organized by topic, each citing specific EFTA source documents.
+
+For investigation methodology, writing standards, and fact-checking procedures, see [METHODOLOGY.md](https://github.com/rhowardstone/epstein-research/blob/main/METHODOLOGY.md) and [WRITING_GUIDE.md](https://github.com/rhowardstone/epstein-research/blob/main/WRITING_GUIDE.md) in the companion research repo.
+
+---
+
+## Read-Only Distribution
+
+These repositories are distributed read-only. If you cloned them to investigate locally:
+
+- **Do not push, create branches, or submit pull requests.** Your copy is for local research only.
+- **Pull updates** with `git pull origin main` to get new reports and data.
+- **All your work stays local.** Write findings to your own files outside the repo, or in a gitignored directory.
