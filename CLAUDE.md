@@ -292,15 +292,19 @@ EFTA (Electronic File Transfer Agreement) numbers are **per-page Bates stamps**,
 | 98 | — | FBI Vault (separate numbering) |
 | 99 | — | House Oversight Committee |
 
-### Opening documents on justice.gov
+### Accessing original PDFs
 
-Every EFTA document can be viewed as a PDF:
+Every EFTA document can be viewed as a PDF from multiple sources. The DOJ is canonical but requires an age gate; two independent mirrors serve byte-identical raw PDFs with no gate.
 
-```
-https://www.justice.gov/epstein/files/DataSet%20{N}/EFTA{NUMBER}.pdf
-```
+| Source | URL Template | Notes |
+|--------|-------------|-------|
+| **DOJ** (canonical) | `https://www.justice.gov/epstein/files/DataSet%20{N}/EFTA{NUMBER}.pdf` | Requires age gate. Must know dataset number. |
+| **RollCall** | `https://media-cdn.rollcall.com/epstein-files/EFTA{NUMBER}.pdf` | Raw PDF, no gate, no dataset needed. Full DS1-12 coverage. |
+| **Kino/JDrive** | `https://assets.getkino.com/documents/EFTA{NUMBER}.pdf` | Raw PDF, no gate. Missing DS12 (March 2026 expansion). |
 
-**Always look up the dataset number from the database first:**
+RollCall and Kino both serve files that are byte-identical to the DOJ originals (SHA-256 verified). For sourcing, use the DOJ URL as primary and RollCall as backup.
+
+**To construct a DOJ URL**, look up the dataset number first:
 
 ```sql
 SELECT dataset FROM documents WHERE efta_number = 'EFTA00074206';
@@ -309,6 +313,14 @@ SELECT dataset FROM documents WHERE efta_number = 'EFTA00074206';
 ```
 
 Do NOT guess the dataset from the EFTA number — the boundaries have gaps and irregularities.
+
+**To construct a RollCall URL**, you only need the EFTA number:
+
+```
+https://media-cdn.rollcall.com/epstein-files/EFTA00074206.pdf
+```
+
+The tool `tools/mirror_coverage.py` can incrementally build a coverage map verifying which mirrors host each document.
 
 ---
 
@@ -326,6 +338,33 @@ Do NOT guess the dataset from the EFTA number — the boundaries have gaps and i
 | `efta_dataset_mapping.csv` / `.json` | EFTA-to-dataset lookup table |
 | `VERIFICATION_URLS.csv` | DOJ document URLs with verification status |
 | `GRAND_JURY_SUBPOENAS.csv` | Identified grand jury subpoenas |
+
+---
+
+## Tools
+
+Python scripts in `tools/` for working with the databases. Most tools have hardcoded paths that you will need to adjust to your local setup — look for `BASE_DIR` or `DB_PATH` near the top of each script.
+
+### Investigation tools (most useful for research)
+
+| Tool | What It Does |
+|------|-------------|
+| `person_search.py` | FTS5 cross-reference search with co-occurrence detection. Find who appears in docs, who appears *with* whom, export to CSV. |
+| `find_missing_efta.py` | Find gaps in the EFTA production by exploiting the page-based numbering system. |
+| `congressional_scorer.py` | Score EFTA documents for congressional relevance. |
+| `extract_subpoena_riders.py` | Parse grand jury subpoena rider clauses from the corpus. |
+| `mirror_coverage.py` | Incrementally build a coverage map of document mirrors (RollCall, Kino/JDrive). Resumable. |
+
+### Pipeline tools (for building/updating databases)
+
+| Tool | What It Does |
+|------|-------------|
+| `build_person_registry.py` | Merge person registries from 3 sources into unified JSON. |
+| `build_knowledge_graph.py` | Build entity-relationship graph from corpus. |
+| `redaction_detector_v2.py` | Detect redaction rectangles in PDF pages. |
+| `transcribe_media.py` | Transcribe audio/video files using faster-whisper (GPU). |
+| `bulk_ocr.py` / `bulk_ocr_fast.py` | Tesseract OCR on extracted images. |
+| `pqg_00` through `pqg_05` | Six-phase prosecutorial query graph pipeline. |
 
 ---
 
