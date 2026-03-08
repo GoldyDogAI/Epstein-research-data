@@ -18,7 +18,7 @@ If missing: Mac/Linux usually have it pre-installed. On Ubuntu/Debian: `sudo apt
 
 ### 2. Download the databases
 
-You need files from **three releases**. Use `gh release download` if available, otherwise `curl -LO`.
+Use `gh release download` if available, otherwise `curl -LO`. There are two releases to download from.
 
 #### Full text corpus (v5.0) — the main database
 
@@ -35,21 +35,19 @@ gunzip full_text_corpus.db.gz
 rm full_text_corpus.db.gz.part_aa full_text_corpus.db.gz.part_ab
 ```
 
-#### Concordance + alteration analysis (v5.1)
+#### All other databases (v5.1)
 
 ```bash
 gh release download v5.1 --repo rhowardstone/Epstein-research-data --pattern "*.db.gz"
-gunzip concordance_complete.db.gz alteration_results.db.gz
+gunzip concordance_complete.db.gz alteration_results.db.gz image_analysis.db.gz
 ```
 
-#### All other databases (v4.0)
+#### Remaining databases (v4.0)
 
 ```bash
-# Download all database files (skip the full_text_corpus parts — you already have v5.0)
+# Smaller databases not yet consolidated into v5.1
 gh release download v4.0 --repo rhowardstone/Epstein-research-data --pattern "*.db.gz"
 gh release download v4.0 --repo rhowardstone/Epstein-research-data --pattern "*.db"
-
-# Decompress
 gunzip *.db.gz
 ```
 
@@ -110,11 +108,11 @@ Also has: `email_threads`, `folder_inventory`, `extraction_stats`, `cross_refere
 
 **Table:** `altered_files` (efta_number, dataset, diff_type, categories, removed_names_json, llm_classification, llm_sensitivity, llm_justification, anomaly_flag)
 
-### `image_analysis.db` (407 MB) — Extracted images
+### `image_analysis.db` (762 MB) — Extracted images
 
-21,859 images extracted from PDFs, analyzed with AI vision. FTS5 searchable.
+92,095 images extracted from PDFs across all 14 datasets (DS1-12, DS98, DS99), analyzed with Qwen2-VL-7B vision model. FTS5 searchable by description, people, objects, and setting.
 
-**Table:** `images` (image_name, efta_number, page_number, analysis_text, people, text_content, objects, setting, notable)
+**Table:** `images` (image_name, efta_number, page_number, analysis_text, people, text_content, objects, setting, activity, notable, analyzed_at)
 
 ### `transcripts.db` (5 MB) — Audio/video transcriptions
 
