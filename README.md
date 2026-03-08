@@ -158,6 +158,8 @@ sqlite3 redaction_analysis_v2.db "SELECT efta_number, page_number, substr(hidden
 
 The [`tools/`](tools/) directory contains all Python scripts used to build the databases from raw PDFs. Use these to replicate the analysis, extend it with new data, or adapt for your own pipeline.
 
+All tools auto-detect the data directory (no path editing needed). They check the `EPSTEIN_DATA_DIR` environment variable first, then look relative to the script and current working directory. If auto-detection fails: `export EPSTEIN_DATA_DIR=/path/to/your/data`
+
 ### Core Pipeline
 
 | Tool | Description |

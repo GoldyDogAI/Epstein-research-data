@@ -343,7 +343,14 @@ The tool `tools/mirror_coverage.py` can incrementally build a coverage map verif
 
 ## Tools
 
-Python scripts in `tools/` for working with the databases. Most tools have hardcoded paths that you will need to adjust to your local setup — look for `BASE_DIR` or `DB_PATH` near the top of each script.
+Python scripts in `tools/` for working with the databases. All tools auto-detect the data directory — no path editing needed. Detection order:
+
+1. `EPSTEIN_DATA_DIR` environment variable (if set)
+2. Repository root (relative to the script's location)
+3. Current working directory
+4. Sibling directories of the current working directory's parent
+
+If auto-detection fails, set the environment variable: `export EPSTEIN_DATA_DIR=/path/to/your/data`
 
 ### Investigation tools (most useful for research)
 
