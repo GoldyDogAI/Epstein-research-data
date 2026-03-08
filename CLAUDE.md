@@ -114,6 +114,12 @@ Also has: `email_threads`, `folder_inventory`, `extraction_stats`, `cross_refere
 
 **Table:** `images` (image_name, efta_number, page_number, analysis_text, people, text_content, objects, setting, activity, notable, analyzed_at)
 
+### `handwriting_transcriptions.db` (248 KB) — Handwritten document transcriptions
+
+Page-level verbatim transcriptions of handwritten FBI/AUSA documents that OCR cannot read, starting with the 14 MCC inmate witness interviews from the Epstein death investigation (case 90A-NY-3151227). 54 pages across 14 witnesses, rendered at 300-400 DPI and transcribed via multimodal image analysis. FTS5 searchable.
+
+**Table:** `transcriptions` (efta_number, page_number, document_type, case_number, serial, subject, subject_role, interview_date, location, transcript, page_of, redaction_count, unclear_count, render_dpi, render_path, source_pdf, transcribed_at, notes)
+
 ### `transcripts.db` (5 MB) — Audio/video transcriptions
 
 1,530 media files, 375 with speech, 92K words total. Whisper large-v3 transcriptions.
