@@ -349,10 +349,58 @@ For investigation methodology, writing standards, and fact-checking procedures, 
 
 ---
 
+## Release Manifest
+
+Databases are hosted as GitHub releases, separate from git. After downloading, **cross-check this list** to confirm you have everything.
+
+| Database | Release | Uncompressed | Contents |
+|----------|---------|-------------|----------|
+| `full_text_corpus.db` | v5.0 | 6.3 GB | Every page of every document, FTS5 indexed |
+| `alteration_results.db` | v5.1 | 8.2 GB | DOJ document alteration tracking |
+| `concordance_complete.db` | v5.1 | 729 MB | Production metadata, email headers |
+| `image_analysis.db` | v5.1 | 762 MB | 92,095 images with vision analysis |
+| `handwriting_transcriptions.db` | v5.1 | 248 KB | Handwritten document transcriptions |
+| `redaction_analysis_v2.db` | v4.0 | 1.0 GB | 2.6M redaction rectangles |
+| `redaction_analysis_ds10.db` | v4.0 | 557 MB | DS10-specific redaction analysis |
+| `ocr_database.db` | v4.0 | 71 MB | Tesseract OCR results |
+| `communications.db` | v4.0 | 24 MB | Communications metadata |
+| `transcripts.db` | v4.0 | 5 MB | Audio/video transcriptions |
+| `spreadsheet_corpus.db` | v4.0 | 4 MB | Native spreadsheet data |
+| `prosecutorial_query_graph.db` | v4.0 | 2.5 MB | Subpoena analysis |
+| `knowledge_graph.db` | v4.0 | 782 KB | Entity relationships |
+
+**Total: 13 databases, ~17 GB uncompressed.**
+
+If any database above is missing from your local directory, download it from the corresponding release.
+
+---
+
+## Updating
+
+`git pull` only updates repo files (CSVs, JSON, tools). **Databases are in releases — you must check those separately.**
+
+```bash
+# 1. Pull repo file changes
+git pull origin main
+
+# 2. Check for new database releases
+gh release list --repo rhowardstone/Epstein-research-data --limit 5
+# (or check https://github.com/rhowardstone/Epstein-research-data/releases)
+
+# 3. Compare release assets against the manifest above
+# Download any new or updated databases, decompress, replace old versions
+
+# 4. Verify
+sqlite3 full_text_corpus.db "SELECT COUNT(*) FROM documents;"
+# Expected: 1385916
+```
+
+---
+
 ## Read-Only Distribution
 
 These repositories are distributed read-only. If you cloned them to investigate locally:
 
 - **Do not push, create branches, or submit pull requests.** Your copy is for local research only.
-- **Pull updates** with `git pull origin main` to get new reports and data.
+- **Pull updates** with `git pull origin main` for repo files. Check releases separately for database updates (see Updating above).
 - **All your work stays local.** Write findings to your own files outside the repo, or in a gitignored directory.
