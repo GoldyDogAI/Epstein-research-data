@@ -4,6 +4,8 @@ Structured data exports from the forensic analysis of the 218GB DOJ Jeffrey Epst
 
 I have threaded through these databases into a searchable visual interface, with an AI-assistant, at https://epstein-data.com
 
+You can also install my full Claude-powered Epstein Investigator setup yourself, by following the directions for the: [desktop install](https://epstein-data.com/investigate), or [CLI version](https://epstein-data.com/investigate_cli).
+
 Note the latest release, v5.1, at: https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.1
 
 **Results repo:** [Epstein-research](https://github.com/rhowardstone/Epstein-research) — 165+ forensic investigation reports with DOJ source citations.
