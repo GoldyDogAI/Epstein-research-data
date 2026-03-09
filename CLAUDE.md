@@ -300,7 +300,9 @@ Every EFTA document can be viewed as a PDF from multiple sources. The DOJ is can
 |--------|-------------|-------|
 | **DOJ** (canonical) | `https://www.justice.gov/epstein/files/DataSet%20{N}/EFTA{NUMBER}.pdf` | Requires age gate. Must know dataset number. |
 | **RollCall** | `https://media-cdn.rollcall.com/epstein-files/EFTA{NUMBER}.pdf` | Raw PDF, no gate, no dataset needed. Full DS1-12 coverage. |
-| **Kino/JDrive** | `https://assets.getkino.com/documents/EFTA{NUMBER}.pdf` | Raw PDF, no gate. Missing DS12 (March 2026 expansion). |
+| **Kino/JDrive** | `https://assets.getkino.com/documents/EFTA{NUMBER}.pdf` | Raw PDF, no gate. DS1-7 + DS9-11. Missing DS12. |
+| **Kino/JDrive (DS8)** | `https://assets.getkino.com/documents/vol00008-official-doj-latest-efta{number}.pdf` | DS8 uses a different naming convention. Note **lowercase** `efta`. |
+| **JMail Viewer** | `https://jmail.world/drive/EFTA{NUMBER}.pdf` (or `vol00008-...` for DS8) | Formatted viewer with page navigation, comments. Uses Kino CDN. |
 
 RollCall and Kino both serve files that are byte-identical to the DOJ originals (SHA-256 verified). For sourcing, use the DOJ URL as primary and RollCall as backup.
 
@@ -320,7 +322,18 @@ Do NOT guess the dataset from the EFTA number — the boundaries have gaps and i
 https://media-cdn.rollcall.com/epstein-files/EFTA00074206.pdf
 ```
 
-The tool `tools/mirror_coverage.py` can incrementally build a coverage map verifying which mirrors host each document.
+**To construct a Kino/JMail URL**, check the dataset first — DS8 uses a different pattern:
+
+```python
+if dataset == 8:
+    url = f"https://assets.getkino.com/documents/vol00008-official-doj-latest-{efta.lower()}.pdf"
+    viewer = f"https://jmail.world/drive/vol00008-official-doj-latest-{efta.lower()}.pdf"
+else:
+    url = f"https://assets.getkino.com/documents/{efta}.pdf"
+    viewer = f"https://jmail.world/drive/{efta}.pdf"
+```
+
+The tool `tools/mirror_coverage.py` can incrementally build a coverage map verifying which mirrors host each document. It handles the DS8 naming convention automatically.
 
 ---
 

@@ -86,6 +86,11 @@ MIRRORS = {
 
 DOJ_URL = "https://www.justice.gov/epstein/files/DataSet%20{ds}/{efta}.pdf"
 
+# DS8 uses a different naming convention on Kino/JDrive CDN.
+# Standard pattern: EFTA00009676.pdf (works for ~38% of DS8)
+# Vol pattern: vol00008-official-doj-latest-efta00009676.pdf (works for 100%)
+KINO_DS8_URL = "https://assets.getkino.com/documents/vol00008-official-doj-latest-{efta_lower}.pdf"
+
 # ── Database setup ─────────────────────────────────────────────────
 
 def init_coverage_db(db_dir):
@@ -163,6 +168,16 @@ def check_efta(session, efta, dataset, delay=0.2):
     for key, mirror in MIRRORS.items():
         url = mirror["url"].format(efta=efta)
         status, size = check_mirror(session, url)
+
+        # DS8 fallback: try vol00008 naming convention on Kino
+        if key == "kino" and status != 200 and dataset == 8:
+            efta_lower = efta.lower()
+            alt_url = KINO_DS8_URL.format(efta_lower=efta_lower)
+            alt_status, alt_size = check_mirror(session, alt_url)
+            if alt_status == 200:
+                status, size, url = alt_status, alt_size, alt_url
+            time.sleep(delay)
+
         result[mirror["status_col"]] = status
         result[mirror["size_col"]] = size
         result[f"{key}_url"] = url
