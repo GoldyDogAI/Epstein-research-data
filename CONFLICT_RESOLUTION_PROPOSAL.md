@@ -140,3 +140,9 @@ The resolved README should combine:
 - PR's expanded tool documentation
 - Upstream's auto-detect data directory note
 - Upstream's Full Database Downloads restructuring (v5.0/v5.1/v4.0 split)
+
+**Note on Knowledge Graph entity descriptions:** The upstream changed the entity description from a detailed per-type breakdown (e.g., "489 people, 12 shell companies, ...") to generic categories ("people, shell companies, organizations, ...") because the entity count increased from 524 to 606 and the per-type numbers changed. Without knowing the exact new breakdown, we adopt the upstream's generic description to avoid publishing inaccurate sub-counts.
+
+## Status
+
+This proposal has been implemented in the accompanying README.md changes in this branch.
