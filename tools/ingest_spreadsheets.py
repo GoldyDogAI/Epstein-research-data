@@ -27,8 +27,25 @@ except ImportError:
     print("ERROR: xlrd not installed. Run: pip install xlrd")
     sys.exit(1)
 
-DB_PATH = "/atb-data/rye/dump/epstein_files/full_text_corpus.db"
-NATIVES_DIR = "/atb-data/rye/dump/epstein_files/datasets/dataset8/VOL00008/NATIVES/0001"
+def _find_data_dir():
+    """Find the directory containing the database files."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        return os.environ["EPSTEIN_DATA_DIR"]
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo_root, "full_text_corpus.db")):
+        return repo_root
+    if os.path.exists(os.path.join(os.getcwd(), "full_text_corpus.db")):
+        return os.getcwd()
+    parent = os.path.dirname(os.getcwd())
+    for name in os.listdir(parent):
+        candidate = os.path.join(parent, name, "full_text_corpus.db")
+        if os.path.exists(candidate):
+            return os.path.join(parent, name)
+    return os.getcwd()
+
+_DATA_DIR = _find_data_dir()
+DB_PATH = os.path.join(_DATA_DIR, "full_text_corpus.db")
+NATIVES_DIR = os.path.join(_DATA_DIR, "datasets/dataset8/VOL00008/NATIVES/0001")
 
 # All spreadsheet native files in DS8
 SPREADSHEETS = [

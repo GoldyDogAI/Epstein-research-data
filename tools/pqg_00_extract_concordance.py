@@ -28,7 +28,31 @@ import hashlib
 from collections import defaultdict, Counter
 from datetime import datetime
 
-BASE_DIR = "/atb-data/rye/dump"
+def _find_base_dir():
+    """Find the parent directory containing epstein_files/ and concordance_files/."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        candidate = os.environ["EPSTEIN_DATA_DIR"]
+        # EPSTEIN_DATA_DIR may point to epstein_files/ itself or its parent
+        if os.path.basename(candidate) == "epstein_files":
+            return os.path.dirname(candidate)
+        if os.path.exists(os.path.join(candidate, "epstein_files")):
+            return candidate
+        return candidate
+    # Check if repo root's parent has epstein_files/
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    parent = os.path.dirname(repo_root)
+    if os.path.exists(os.path.join(parent, "epstein_files", "full_text_corpus.db")):
+        return parent
+    # Check cwd parent
+    cwd_parent = os.path.dirname(os.getcwd())
+    if os.path.exists(os.path.join(cwd_parent, "epstein_files", "full_text_corpus.db")):
+        return cwd_parent
+    # Check if cwd itself contains epstein_files/
+    if os.path.exists(os.path.join(os.getcwd(), "epstein_files", "full_text_corpus.db")):
+        return os.getcwd()
+    return os.getcwd()
+
+BASE_DIR = _find_base_dir()
 CONCORDANCE_DIR = os.path.join(BASE_DIR, "concordance_files")
 HOUSE_ESTATE_DIR = os.path.join(BASE_DIR, "datasets/house_estate")
 DOJ_FIRST_PROD_DIR = os.path.join(

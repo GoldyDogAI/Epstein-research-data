@@ -4,7 +4,25 @@
 import json
 import re
 
-BASE = "/atb-data/rye/dump/epstein_files"
+import os
+
+def _find_data_dir():
+    """Find the directory containing the database files."""
+    if os.environ.get("EPSTEIN_DATA_DIR"):
+        return os.environ["EPSTEIN_DATA_DIR"]
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo_root, "gov_officials_search_results.json")):
+        return repo_root
+    if os.path.exists(os.path.join(os.getcwd(), "gov_officials_search_results.json")):
+        return os.getcwd()
+    parent = os.path.dirname(os.getcwd())
+    for name in os.listdir(parent):
+        candidate = os.path.join(parent, name, "gov_officials_search_results.json")
+        if os.path.exists(candidate):
+            return os.path.join(parent, name)
+    return os.getcwd()
+
+BASE = _find_data_dir()
 SEARCH = f"{BASE}/gov_officials_search_results.json"
 CONGRESS_CTX = f"{BASE}/gov_officials_context.json"
 EXEC_CTX = f"{BASE}/gov_officials_exec_context.json"
