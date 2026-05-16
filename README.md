@@ -1,14 +1,14 @@
 # Epstein Files: Structured Data Exports
 
-Structured data exports from the forensic analysis of the 218GB DOJ Jeffrey Epstein file release (all 12 datasets + House Oversight Estate + FBI Vault: 1,385,916 documents, 2,771,231 pages).
+Structured data exports from the forensic analysis of the DOJ Jeffrey Epstein file release under the [Epstein Files Transparency Act](https://www.congress.gov/bill/119th-congress/house-bill/42) (Public Law 119-38). All 12 DOJ datasets plus House Oversight Estate and FBI Vault materials: **1.4M+ documents, 2.9M+ pages**.
 
-I have threaded through these databases into a searchable visual interface, with an AI-assistant, at https://epstein-data.com
+**[epstein-data.com](https://epstein-data.com)** — searchable interface with full-text search, AI research assistant, document viewer, redaction analysis, deposition transcripts, geographic heatmap, and more.
 
-You can also install my full Claude-powered Epstein Investigator setup yourself, by following the directions for the: [desktop install](https://epstein-data.com/investigate), or [CLI version](https://epstein-data.com/investigate_cli).
+**[Investigation Reports](https://epstein-data.com/reports/)** — 180+ forensic reports with DOJ source citations, organized by topic.
 
-Note the latest release, v5.1, at: https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.1
+**[Desktop Install](https://epstein-data.com/investigate)** — run the full Claude-powered investigator locally with all databases. No tech skills required. ([CLI version](https://epstein-data.com/investigate_cli))
 
-**Results repo:** [Epstein-research](https://github.com/rhowardstone/Epstein-research) — 165+ forensic investigation reports with DOJ source citations.
+---
 
 ## Table of Contents
 
@@ -32,110 +32,157 @@ Note the latest release, v5.1, at: https://github.com/rhowardstone/Epstein-resea
 - [Contact](#contact)
 
 ## What's Here
+## Investigation Reports
 
-### Knowledge Graph (Curated)
+180+ reports across 18 categories. Each report cites specific EFTA documents you can verify at [epstein-data.com](https://epstein-data.com). Browse all reports in the [grid view](https://epstein-data.com/reports/).
+
+**[Executive Summaries](https://epstein-data.com/reports/#cat-overview)** — [Final Investigation Report](https://epstein-data.com/reports/overview/FINAL_INVESTIGATION_REPORT.html) | [Master Report](https://epstein-data.com/reports/overview/MASTER_REPORT.html) | [Phase 4 Briefing Kit](https://epstein-data.com/reports/overview/PHASE4_BRIEFING_KIT.html)
+
+**[Individual Investigations](https://epstein-data.com/reports/#cat-individuals)** — [Trump](https://epstein-data.com/reports/individuals/DONALD_TRUMP_INVESTIGATION.html) | [Rothschild](https://epstein-data.com/reports/individuals/ROTHSCHILD_INVESTIGATION.html) | [Pseudonym & Codename Registry](https://epstein-data.com/reports/individuals/PSEUDONYM_CODENAME_REGISTRY.html)
+
+**[Institutional Failures](https://epstein-data.com/reports/#cat-institutional)** — [DOJ Document Removal Audit](https://epstein-data.com/reports/institutional/DOJ_DOCUMENT_REMOVAL_AUDIT.html) | [DS12 Expansion Analysis](https://epstein-data.com/reports/institutional/DS12_EXPANSION_ANALYSIS.html) | [Alteration Forensics](https://epstein-data.com/reports/institutional/DOJ_DOCUMENT_ALTERATION_FORENSICS.html)
+
+**[Congressional Briefings](https://epstein-data.com/reports/#cat-congressional)** — [Subpoena Guide](https://epstein-data.com/reports/congressional/CONGRESSIONAL_SUBPOENA_GUIDE.html) | [Witness Brief: Indyke](https://epstein-data.com/reports/congressional/WITNESS_BRIEF_INDYKE.html) | [Deposition Analysis: Indyke](https://epstein-data.com/reports/congressional/DEPOSITION_ANALYSIS_INDYKE.html)
+
+**[Financial Forensics](https://epstein-data.com/reports/#cat-financial)** — [DiIorio / Apollo Whistleblower](https://epstein-data.com/reports/financial/DILORIO_APOLLO_WHISTLEBLOWER.html) | [Shell Entity Map](https://epstein-data.com/reports/financial/SHELL_ENTITY_MAP.html) | [Leon Black Prosecution Failure](https://epstein-data.com/reports/individuals/LEON_BLACK_PROSECUTION_FAILURE.html)
+
+**[Evidence & Device Forensics](https://epstein-data.com/reports/#cat-evidence)** — [Evidence Compilation](https://epstein-data.com/reports/evidence/EVIDENCE_COMPILATION.html) | [Device Forensics](https://epstein-data.com/reports/evidence/DEVICE_FORENSICS_COMPLETE.html) | [MCC Inmate Witness Interviews](https://epstein-data.com/reports/evidence/MCC_INMATE_WITNESS_INTERVIEWS.html)
+
+**[Intelligence Networks](https://epstein-data.com/reports/#cat-intelligence)** — [FBI Intelligence Investigations](https://epstein-data.com/reports/intelligence/FBI_INTELLIGENCE_INVESTIGATIONS.html) | [Israel Deep Dive](https://epstein-data.com/reports/intelligence/ISRAEL_DEEP_DIVE_V2.html)
+
+**[Social Network Analysis](https://epstein-data.com/reports/#cat-social-networks)** — [Geffen](https://epstein-data.com/reports/social-networks/GEFFEN_INVESTIGATION.html) | [Kotick / Activision](https://epstein-data.com/reports/social-networks/KOTICK_ACTIVISION.html) | [Peggy Siegal Pipeline](https://epstein-data.com/reports/social-networks/PEGGY_SIEGAL_PIPELINE.html)
+
+**[Victim Census & Routes](https://epstein-data.com/reports/#cat-victims)** | **[Art Market](https://epstein-data.com/reports/#cat-art)** | **[Science Network](https://epstein-data.com/reports/#cat-scientists)** | **[Government Officials](https://epstein-data.com/reports/#cat-government-officials)** | **[Dataset Analysis](https://epstein-data.com/reports/#cat-raw-dataset-analysis)** | **[Methodology](https://epstein-data.com/reports/#cat-methodology)** | **[Internet Theories](https://epstein-data.com/reports/#cat-internet-theories)** | **[Prosecutorial Query Graph](https://epstein-data.com/reports/#cat-pqg_lines_of_investigation)**
+
+---
+
+## Quick Start
+
+All databases are in a single release: **[v5.2 — Complete Database Collection](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.2)** (PII-redacted).
+
+```bash
+# Create the data directory (required for search tools)
+mkdir -p data
+
+# Download the split corpus parts (~2.3 GB total)
+wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v5.2/ftc_clean_part_aa
+wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v5.2/ftc_clean_part_ab
+wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v5.2/ftc_clean_part_ac
+
+# Reassemble, decompress, and move to data/
+cat ftc_clean_part_* > full_text_corpus.db.gz
+gunzip full_text_corpus.db.gz
+mv full_text_corpus.db data/
+
+# Search the full text corpus
+sqlite3 data/full_text_corpus.db "SELECT efta_number, page_number, substr(text_content, 1, 200) FROM pages WHERE text_content LIKE '%Leon Black%' LIMIT 10;"
+
+# FTS5 full-text search (faster)
+sqlite3 data/full_text_corpus.db "SELECT p.efta_number, p.page_number, substr(p.text_content, 1, 200) FROM pages_fts fts JOIN pages p ON p.rowid = fts.rowid WHERE pages_fts MATCH 'shell company' LIMIT 10;"
+```
+
+---
+
+## Databases
+
+All databases available in the [v5.2 release](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.2).
+
+| Database | Compressed | Description |
+|----------|-----------|-------------|
+| `full_text_corpus.db` (after reassembly) | 2.3 GB (split) | Master text database (split into `ftc_clean_part_aa/ab/ac`). 1.4M docs, 2.9M pages with full text and FTS5 search. DS1-12 + House Oversight (DS99) + FBI Vault (DS98). |
+| `concordance_complete.db` | 137 MB | Cross-reference with email threads, folder inventory, production metadata. |
+| `alteration_results.db` | 183 MB | 212K change units with diff text, pixel-diff, LLM classification of post-release DOJ document modifications. |
+| `redaction_analysis_v2.db` | 166 MB | 2.6M redaction boxes, 850K doc summaries, 39K reconstructed pages, 107K extracted entities. |
+| `redaction_analysis_ds10.db` | 87 MB | Dataset 10 deep redaction analysis. |
+| `image_analysis.db` | 64 MB | 38K+ extracted images with AI-generated descriptions. |
+| `secondary_stamps.db` | — | 835K documents mapped to parallel Bates numbering systems (R1, JPM-SDNY, DB-SDNY, SDNY-GM). |
+| `deposition_transcripts.db` | — | Whisper-transcribed depositions with speaker diarization (Wexner, Bill Clinton, Hillary Clinton, and others). |
+| `document_status.db` | — | Document availability tracking across DOJ website. |
+| `handwriting_transcriptions.db` | — | Handwritten document transcriptions. |
+| `native_files.db` | — | Metadata for 3,800+ non-PDF native files (XLSX, media, etc.). |
+| `transcripts.db` | 1.7 MB | 1,600+ media files, 435 with speech, 190K words (faster-whisper large-v3). |
+| `ocr_database.db` | 25 MB | Tesseract OCR results for degraded documents. |
+| `spreadsheet_corpus.db` | — | Native spreadsheet data extracted from Dataset 8. |
+| `prosecutorial_query_graph.db` | 2.5 MB | Subpoena analysis: riders, returns, clause fulfillment, investigative gaps. |
+| `knowledge_graph.db` | 764 KB | 524 curated entities, 2,096 relationships. |
+| `communications.db` | — | Email thread analysis. |
+| `persons_registry.json` | — | 1,600+ persons merged from 9 sources with aliases and categories. |
+
+---
+
+## Data Exports
+
+### Knowledge Graph
 
 | File | Records | Description |
 |------|---------|-------------|
-| `knowledge_graph_entities.json` | 606 | Curated entities: people, shell companies, organizations, properties, aircraft, locations. Each entry includes aliases, metadata (occupation, legal status, mention counts), and entity type. |
-| `knowledge_graph_relationships.json` | 2,302 | Relationships between entities with types (traveled_with, associated_with, owned_by, victim_of, etc.), weights, date ranges, and source/target entity names. |
-
-**Note on knowledge graph:** The knowledge graph was curated during the initial investigation phases and does not include NER (Named Entity Recognition) run against the full OCR corpus. It covers the most frequently-referenced and manually-verified entities. For comprehensive name extraction from the full text, see `extracted_entities_filtered.json` below or query the full databases directly.
+| `knowledge_graph_entities.json` | 606 | Curated entities: people, shell companies, organizations, properties, aircraft, locations. |
+| `knowledge_graph_relationships.json` | 2,302 | Typed relationships with weights, date ranges, and source/target entity names. |
 
 ### Person Registry
 
 | File | Records | Description |
 |------|---------|-------------|
-| `persons_registry.json` | 1,614 | Unified person registry merged from 9 sources: epstein-pipeline (1,195), knowledge-graph (285), la-rana-chicana (237), Wikipedia Epstein files list (45), Bondi PEP letter Feb 2026 (19), jmail.world (9), corpus-investigation (2), khanna-massie-2026 (2), and doj-release-2026 (1). Each entry includes name, aliases, category (political/business/academic/staff/financial/legal/media/other), search terms, and source attribution. |
+| `persons_registry.json` | 1,614 | Unified person registry from 9 sources. Includes name, aliases, category, search terms. |
 
-**Note:** This registry is broader than the knowledge graph — it includes every named individual identified across all investigation phases, congressional disclosures, and cross-referenced sources. Categories reflect the person's primary role relative to the Epstein case, not an accusation. Many entries (e.g., Bondi PEP letter names) appear in the files only in incidental contexts such as news clippings or tips.
-
-### Entity Extraction (Filtered from 107K raw)
+### Entity Extraction
 
 | File | Records | Description |
 |------|---------|-------------|
-| `extracted_entities_filtered.json` | 8,085 | Filtered entity extractions: 3,881 names (appearing in 2+ documents), 2,238 phone numbers, 1,489 amounts, 357 emails, 116 organizations. Each entry includes the EFTA document numbers where it appears. |
-| `extracted_names_multi_doc.csv` | 3,881 | Names appearing in multiple EFTA documents with document counts and sample EFTA references. CSV format for easy browsing. |
-
-**Note on quality:** The raw extraction table contains 107,422 entities, many of which are OCR artifacts from redacted/degraded documents. The filtered exports remove garbled text and require multi-document co-occurrence for names.
+| `extracted_entities_filtered.json` | 8,085 | Filtered entities: 3,881 names (2+ documents), 2,238 phone numbers, 1,489 amounts, 357 emails, 116 organizations. |
+| `extracted_names_multi_doc.csv` | 3,881 | Names appearing in multiple documents with counts and sample EFTA references. |
 
 ### Image Catalog
 
 | File | Records | Description |
 |------|---------|-------------|
-| `image_catalog.csv.gz` | 38,955 | Complete image catalog (gzipped). Fields: id, image_name, efta_number, page_number, people, text_content, objects, setting, activity, notable, analyzed_at. |
-| `image_catalog_notable.json.gz` | 38,864 | Images with people or notable content identified (gzipped JSON). Truncated fields for manageable size. |
+| `image_catalog.csv.gz` | 38,955 | Complete image catalog with AI descriptions, people identified, objects, settings. |
 
 ### Document Summaries
 
 | File | Records | Description |
 |------|---------|-------------|
-| `document_summary.csv.gz` | 519,438 | Per-document redaction summary for every EFTA document (gzipped). Fields: efta_number, total_redactions, bad_redactions, proper_redactions, has_recoverable_text, dataset_source. |
+| `document_summary.csv.gz` | 519,438 | Per-document redaction summary for every EFTA document. |
 
-### Reconstructed Pages (High Interest)
-
-| File | Records | Description |
-|------|---------|-------------|
-| `reconstructed_pages_high_interest.json.gz` | 39,588 | Pages where hidden text was recovered from under redactions (gzipped JSON). Fields include efta_number, page_number, num_fragments, reconstructed_text, interest_score, and names_found. Higher interest scores indicate more substantive recovered content. |
-
-### EFTA-to-DOJ URL Mapping
-
-| File | Description |
-|------|-------------|
-| `efta_dataset_mapping.csv` | EFTA number ranges for each of the 12 DOJ datasets, with URL templates. |
-| `efta_dataset_mapping.json` | Same mapping in JSON format for programmatic use. |
-
-**URL Pattern:** `https://www.justice.gov/epstein/files/DataSet%20{N}/EFTA{XXXXXXXX}.pdf`
-
-| Dataset | EFTA Start | EFTA End |
-|---------|-----------|----------|
-| 1 | 00000001 | 00003158 |
-| 2 | 00003159 | 00003857 |
-| 3 | 00003858 | 00005586 |
-| 4 | 00005705 | 00008320 |
-| 5 | 00008409 | 00008528 |
-| 6 | 00008529 | 00008998 |
-| 7 | 00009016 | 00009664 |
-| 8 | 00009676 | 00039023 |
-| 9 | 00039025 | 01262781 |
-| 10 | 01262782 | 02205654 |
-| 11 | 02205655 | 02730264 |
-| 12 | 02730265 | 02858497 |
-
-**Note:** EFTA numbers are assigned **per page**, not per document. A multi-page document consumes consecutive EFTA numbers — e.g., EFTA00008320 (89 pages) covers Bates numbers 00008320–00008408, and Dataset 5 begins at EFTA00008409. There are **no gaps** between datasets; every apparent gap is accounted for by multi-page documents at dataset boundaries.
-
-## DOJ Document Removal Audit
-
-The [`doj_audit/`](doj_audit/) directory documents an audit of the DOJ Epstein Library that identified documents removed or altered after the initial public release.
+### Reconstructed Pages
 
 | File | Records | Description |
 |------|---------|-------------|
-| `doj_audit/CONFIRMED_REMOVED.csv` | 67,784 | Documents confirmed removed from the DOJ website (returning HTTP 404). Fields: efta, justice_gov_url, dataset, pages, scan_content_length, scan_last_modified. |
+| `reconstructed_pages_high_interest.json.gz` | 39,588 | Pages where hidden text was recovered from under redactions. |
+
+---
+
+## DOJ Document Audit
+
+The [`doj_audit/`](doj_audit/) directory documents a comprehensive audit of the DOJ Epstein Library conducted in February-March 2026.
+
+The audit identified ~64,000 documents that were temporarily removed from the DOJ website after the initial public release, as well as ~24,000 documents with post-release size changes suggesting modification. **As of March 2026, previously removed documents have been restored to justice.gov.** The audit data is preserved for the historical record.
+
+| File | Records | Description |
+|------|---------|-------------|
+| `doj_audit/CONFIRMED_REMOVED.csv` | 67,784 | Documents confirmed removed at time of audit (since restored). |
 | `doj_audit/FLAGGED_documents.csv` | 96,112 | All flagged documents with DOJ URLs and dataset info. |
-| `doj_audit/FLAGGED_documents_details.csv` | 102,223 | Flagged documents with detailed metadata including status, category, document type, priority score, confidence, and text preview. |
-| `doj_audit/SIZE_MISMATCHES.csv` | 23,989 | Documents where the file size on the DOJ server differs from the originally ingested version, suggesting post-release modification. |
-| `doj_audit/sample_verification_results.csv` | 500 | Statistical sample verification of flagged 404s using browser-based checks. |
+| `doj_audit/FLAGGED_documents_details.csv` | 102,223 | Detailed metadata including status, category, document type, priority score. |
+| `doj_audit/SIZE_MISMATCHES.csv` | 23,989 | Documents with file size changes between original and current DOJ versions. |
 
-See the full report: [DOJ Document Removal Audit](https://github.com/rhowardstone/epstein-research/blob/main/institutional/DOJ_DOCUMENT_REMOVAL_AUDIT.md)
+Full reports: [Document Removal Audit](https://epstein-data.com/reports/institutional/DOJ_DOCUMENT_REMOVAL_AUDIT.html) | [Alteration Forensics](https://epstein-data.com/reports/institutional/DOJ_DOCUMENT_ALTERATION_FORENSICS.html)
 
-## Alteration Analysis
+### Alteration Analysis
 
-The [`alteration_analysis/`](alteration_analysis/) directory contains analysis of documents where content was altered between versions of the DOJ release.
+The [`alteration_analysis/`](alteration_analysis/) directory contains analysis of documents where content was modified between versions.
 
 | File | Records | Description |
 |------|---------|-------------|
-| `alteration_analysis/classified_alterations.csv` | 21,803 | Documents with classified alteration types (CONTENT_REDUCTION, EMAILS_REMOVED, etc.) with sensitivity ratings and LLM-generated reasoning. |
-| `alteration_analysis/removed_entities_export.csv` | 146,209 | Entities (names, accounts, phone numbers) that were removed from documents between versions, with corpus hit counts and classification. |
+| `alteration_analysis/classified_alterations.csv` | 21,803 | Classified alteration types with sensitivity ratings and LLM reasoning. |
+| `alteration_analysis/removed_entities_export.csv` | 146,209 | Entities (names, accounts, phone numbers) removed between document versions. |
 
-The full alteration database (42,782 files tracked, 212,730 change units) is available as `alteration_results.db.gz` in the [v5.1 release](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.1). See the full report: [DOJ Document Alteration Forensics](https://github.com/rhowardstone/epstein-research/blob/main/institutional/DOJ_DOCUMENT_ALTERATION_FORENSICS.md)
+---
 
-## Recovered Corrupted PDFs
+## EFTA Numbering and DOJ URLs
 
-The [`recovered_corrupted_pdfs/`](recovered_corrupted_pdfs/) directory contains text recovered from 5 corrupted PDF documents in the DOJ release through forensic byte-level carving:
+EFTA numbers are assigned **per page**, not per document. A 10-page document consumes 10 consecutive EFTA numbers.
 
-`EFTA00593870`, `EFTA00597207`, `EFTA00645624`, `EFTA01175426`, `EFTA01220934`
-
-Each subdirectory contains the cleaned extracted text from the corresponding corrupted PDF. See the full report: [Corrupted PDF Forensics](https://github.com/rhowardstone/epstein-research/blob/main/evidence/CORRUPTED_PDF_FORENSICS.md)
+**URL pattern:** `https://www.justice.gov/epstein/files/DataSet%20{N}/EFTA{XXXXXXXX}.pdf`
 
 ## Investigation Reports & Reference Files
 
@@ -154,48 +201,32 @@ Each subdirectory contains the cleaned extracted text from the corresponding cor
 | `NON_EFTA_VERIFICATION_URLS.csv` | — | Verification URLs for non-EFTA documents (FBI Vault, House Oversight) with document IDs, datasets, page counts, and archive.org links. |
 
 ## Full Database Downloads
+| Dataset | EFTA Start | EFTA End | Notes |
+|---------|-----------|----------|-------|
+| 1 | 00000001 | 00003158 | |
+| 2 | 00003159 | 00003857 | |
+| 3 | 00003858 | 00005586 | |
+| 4 | 00005705 | 00008320 | |
+| 5 | 00008409 | 00008528 | |
+| 6 | 00008529 | 00008998 | |
+| 7 | 00009016 | 00009664 | |
+| 8 | 00009676 | 00039023 | |
+| 9 | 00039025 | 01262781 | Largest (103 GB) |
+| 10 | 01262782 | 02205654 | |
+| 11 | 02205655 | 02730264 | |
+| 12 | 02730265 | 02858497 | Post-release expansion |
 
-Source databases are split across releases:
+No gaps between datasets 1-11 — every apparent gap is a multi-page document at a boundary. Dataset 12 has internal gaps (~100K unassigned numbers).
 
-- **[v5.0](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.0)** — Updated full text corpus (DS12 expansion, March 2026)
-- **[v5.1](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.1)** — Alteration analysis database
-- **[v4.0](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v4.0)** — All other databases
+Also available as `efta_dataset_mapping.csv` and `efta_dataset_mapping.json`.
 
-| Database | Release | Compressed | Uncompressed | Contents |
-|----------|---------|-----------|-------------|----------|
-| [full_text_corpus.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.0) | v5.0 | 2.3GB (split) | 6.3GB | 1,385,916 documents, 2,771,231 pages with full text, FTS5 search index. All 12 EFTA datasets + House Oversight Estate (DS99) + FBI Vault (DS98) + native spreadsheets + recovered EFTAs. Download both `.part_aa` and `.part_ab` and concatenate: `cat full_text_corpus.db.gz.part_* > full_text_corpus.db.gz` |
-| [concordance_complete.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.1) | v5.1 | 137MB | 696MB | 1,385,519 documents, 2,788,208 pages — concordance cross-reference with email threads, folder inventory, production metadata |
-| [alteration_results.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/tag/v5.1) | v5.1 | 183MB | 8.2GB | 212,730 change units with diff text, pixel-diff results, LLM classification |
-| [redaction_analysis_v2.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/redaction_analysis_v2.db.gz) | v4.0 | 166MB | 971MB | 2.59M redaction records, 849K document summaries, 39K reconstructed pages, 107K extracted entities |
-| [redaction_analysis_ds10.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/redaction_analysis_ds10.db.gz) | v4.0 | 87MB | 532MB | Dataset 10 deep analysis (EFTA01262782-02205654) |
-| [image_analysis.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/image_analysis.db.gz) | v4.0 | 64MB | 389MB | 38,955 images with AI-generated descriptions |
-| [ocr_database.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/ocr_database.db.gz) | v4.0 | 25MB | 68MB | OCR extraction data |
-| [transcripts.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/transcripts.db.gz) | v4.0 | 1.7MB | 4.8MB | 1,628 media file entries, 435 with speech content, 189,982 words (faster-whisper large-v3) |
-| [knowledge_graph.db](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/knowledge_graph.db) | v4.0 | 764KB | 764KB | Curated entities and relationships (uncompressed SQLite). Updated entity/relationship JSON files with 606 entities and 2,302 relationships are in the repo directly. |
-| [communications.db.gz](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/communications.db.gz) | v4.0 | — | — | Email thread analysis |
-| [prosecutorial_query_graph.db](https://github.com/rhowardstone/Epstein-research-data/releases/download/v4.0/prosecutorial_query_graph.db) | v4.0 | 2.5MB | 2.5MB | Subpoena analysis: riders, returns, clause fulfillment, investigative gaps |
+---
 
-**Total:** ~3.0GB compressed / ~17GB uncompressed
+## Processing Tools
 
-```bash
-# Download and decompress the full text corpus (split into 2 parts)
-wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v5.0/full_text_corpus.db.gz.part_aa
-wget https://github.com/rhowardstone/Epstein-research-data/releases/download/v5.0/full_text_corpus.db.gz.part_ab
-cat full_text_corpus.db.gz.part_* > full_text_corpus.db.gz
-gunzip full_text_corpus.db.gz
+The `tools/` directory contains 34 Python scripts used to build all databases from raw PDFs. Use these to replicate or extend the analysis.
 
-# Search the full text corpus
-sqlite3 full_text_corpus.db "SELECT efta_number, page_number, substr(text_content, 1, 200) FROM pages WHERE text_content LIKE '%Leon Black%' LIMIT 10;"
-
-# Search redacted content
-sqlite3 redaction_analysis_v2.db "SELECT efta_number, page_number, substr(hidden_text, 1, 300) FROM redactions WHERE hidden_text LIKE '%TERM%' AND length(hidden_text) > 20 LIMIT 20;"
-```
-
-## Processing Tools (Replication Pipeline)
-
-The [`tools/`](tools/) directory contains all Python scripts used to build the databases from raw PDFs. Use these to replicate the analysis, extend it with new data, or adapt for your own pipeline.
-
-All tools auto-detect the data directory (no path editing needed). They check the `EPSTEIN_DATA_DIR` environment variable first, then look relative to the script and current working directory. If auto-detection fails: `export EPSTEIN_DATA_DIR=/path/to/your/data`
+All tools auto-detect the data directory via `EPSTEIN_DATA_DIR` environment variable, or look relative to the script location.
 
 ### Core Pipeline
 
@@ -267,35 +298,49 @@ The [`tools/pipeline/`](tools/pipeline/) directory contains a multi-agent docume
 | `tools/pipeline/extraction_only.py` | Extraction-only mode for entity and relationship extraction |
 | `tools/pipeline/victim_classifier.py` | Classifies identified persons as victims, perpetrators, or associates based on document context |
 
-### Data Acquisition
+### Recovered Corrupted PDFs
 
-The raw PDFs can be obtained from:
+The [`recovered_corrupted_pdfs/`](recovered_corrupted_pdfs/) directory contains text forensically recovered from 5 corrupted PDFs through byte-level carving: `EFTA00593870`, `EFTA00597207`, `EFTA00645624`, `EFTA01175426`, `EFTA01220934`. See: [Corrupted PDF Forensics](https://epstein-data.com/reports/evidence/CORRUPTED_PDF_FORENSICS.html)
 
-| Source | URL | Contents |
-|--------|-----|----------|
-| **DOJ Epstein Library** | [justice.gov/epstein](https://www.justice.gov/epstein) | Datasets 1-12 (individual PDFs). Bulk downloads removed Feb 6, 2026. |
-| **Archive.org DS9** | [full.tar.bz2](https://archive.org/download/Epstein-Dataset-9-2026-01-30/full.tar.bz2) | 103.6 GiB. Largest single dataset. |
-| **Archive.org DS11** | [DataSet 11.zip](https://archive.org/download/Epstein-Data-Sets-So-Far/DataSet%2011.zip) | 25.6 GiB. 267,651 PDFs. |
-| **Archive.org DS1-5** | [combined-all-epstein-files](https://archive.org/details/combined-all-epstein-files/) | First 5 datasets combined. |
-| **House Oversight** | [oversight.house.gov](https://oversight.house.gov/release/oversight-committee-releases-epstein-records-provided-by-the-department-of-justice/) | Estate documents, DOJ-provided records, photo releases. |
+---
 
-See [COMMUNITY_PLATFORMS.md](https://github.com/rhowardstone/Epstein-research/blob/main/COMMUNITY_PLATFORMS.md) in the research repo for a full directory of 78+ community tools and mirrors.
+## Raw Data Sources
+
+| Source | Contents |
+|--------|----------|
+| [DOJ Epstein Library](https://www.justice.gov/epstein) | Datasets 1-12 (individual PDFs) |
+| [Archive.org DS9](https://archive.org/download/Epstein-Dataset-9-2026-01-30/full.tar.bz2) | 103.6 GB, largest single dataset |
+| [Archive.org DS11](https://archive.org/download/Epstein-Data-Sets-So-Far/DataSet%2011.zip) | 25.6 GB, 267K PDFs |
+| [Archive.org DS1-5](https://archive.org/details/combined-all-epstein-files/) | First 5 datasets combined |
+| [House Oversight](https://oversight.house.gov/release/oversight-committee-releases-epstein-records-provided-by-the-department-of-justice/) | Estate documents, DOJ-provided records |
+
+See [COMMUNITY_PLATFORMS.md](https://github.com/rhowardstone/epstein-research/blob/main/COMMUNITY_PLATFORMS.md) for a directory of 79+ community tools, mirrors, and analysis platforms.
+
+---
 
 ## Integration Notes
 
-For developers building tools on top of this data:
-
-- EFTA numbers are the universal key. Every document in the DOJ release has one.
-- The `efta_dataset_mapping` files let you resolve any EFTA number to a DOJ PDF URL.
-- Entity `efta_numbers` arrays give you cross-references: "this person appears in these documents."
-- Knowledge graph `weight` on relationships indicates strength of connection (higher = more documented).
-- Image `image_name` format is `EFTA{number}_p{page}_i{index}_{hash}.png` — parse EFTA number and page from the filename.
-- **No inter-dataset gaps:** EFTA numbers are per-page, so a multi-page terminal document in each dataset consumes the EFTA numbers up to the next dataset's start. There are no missing files between datasets.
+- **EFTA numbers are the universal key.** Every document in the DOJ release has one.
+- **Join on `efta_number`**, not `document_id`, when linking across databases.
+- **FTS5 search**: `SELECT ... FROM pages_fts WHERE pages_fts MATCH 'term'` — join on `rowid`.
+- Entity `efta_numbers` arrays give cross-references: "this entity appears in these documents."
+- Image filename format: `EFTA{number}_p{page}_i{index}_{hash}.png`.
 
 ## License
 
-This is analysis of public government records released under the Epstein Files Transparency Act (Public Law 118-299). The underlying documents are U.S. government works. This structured data is released into the public domain.
+Analysis of public government records released under the Epstein Files Transparency Act (Public Law 119-38). Underlying documents are U.S. government works. Structured data released under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ## Contact
 
-Please open an issue if you find any problems! We will respond promptly.
+Questions or corrections? Use the feedback form at [epstein-data.com](https://epstein-data.com).
+
+
+## Defective Redactions Analysis
+
+**NEW:** [Defective Redactions in DOJ Court Filings](defective_redactions/) — Recovery of hidden text from 12,000+ court filing PDFs with faulty redactions (Dec 2025 - Feb 2026).
+
+- **[Quick Start Guide](defective_redactions/README.md)** — Copy/paste technique, download tools, case inventory
+- **[Technical Analysis](defective_redactions/docs/technical_report.md)** — Full vulnerability assessment and methodology  
+- **[Public Guide](defective_redactions/docs/public_guide.md)** — Non-technical explanation for journalists and researchers
+
+**Key Findings:** .3M+ property tax details, 6M+ in undisclosed loans, previously unknown financial entities, evidence destruction instructions — all recoverable from original Wayback Machine archives.
